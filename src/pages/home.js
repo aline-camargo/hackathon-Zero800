@@ -1,6 +1,6 @@
 import Card from '../components/main-card.js';
 import templateCategory from '../components/event-categories.js';
-import Select from '../components/input.js';
+import Select from '../components/select.js';
 
 const hammer = new Hammer(document.querySelector('main'));
 let index = 0;

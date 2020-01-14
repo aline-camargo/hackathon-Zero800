@@ -15,11 +15,11 @@ const Select = (func) => {
 </div>
   `;
   return template;
-}
+};
 
 window.select = {
   handleClick: (event, callBack) => {
-    const path = `Regiao-${event.target.options[event.target.selectedIndex].value}`
+    const path = `Regiao-${event.target.options[event.target.selectedIndex].value}`;
     callBack(path);
   },
 };

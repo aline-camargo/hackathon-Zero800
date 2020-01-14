@@ -1,4 +1,4 @@
-import templateCategory from './components/event-categories';
+import templateCategory from './event-categories';
 
 const filterCategory = () => {
   const db = firebase.firestore().collection('events');

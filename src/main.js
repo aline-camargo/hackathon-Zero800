@@ -2,8 +2,8 @@ import funcs from './pages/home.js';
 import getUser from './pages/profile.js';
 import Info from './pages/info.js';
 import getMoreEvent from './pages/moreinfoevent.js';
-import loginGoogle from './pages/google.js';
-import loginFacebook from './pages/facebook.js';
+import loginGoogle from './utils/google.js';
+import loginFacebook from './utils/facebook.js';
 import getFavorites from './pages/favorites.js';
 import registerPage from './pages/register.js';
 
