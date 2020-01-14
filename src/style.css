@@ -2,6 +2,12 @@ body {
  background-color: #EEEEEE;
 }
 
+.danger {
+  width: 90%;
+  max-width: none !important;
+  border-radius: 6px !important;
+}
+
 .img-profile {
   border-radius: 50%;
   border: solid 2px #4FC993;

@@ -6,11 +6,11 @@ const hammer = new Hammer(document.querySelector('main'));
 let index = 0;
 let tamanho = 0;
 
-const moreInfo = (target) => { 
+const moreInfo = (target) => {
   window.location.hash = target.id;
 };
 
-const select = (id) => { 
+const select = (id) => {
   window.location.hash = id;
 };
 
@@ -22,14 +22,20 @@ const showEvents = (array) => {
     ${templateCategory({ src: 'img/karaoke.png', title: 'Show' })}
     ${templateCategory({ src: 'img/theater.png', title: 'Teatro' })}
     ${templateCategory({ src: 'img/popcorn.png', title: 'Cinema' })}
-    ${templateCategory({ src: 'img/stretching-exercises.png', title: 'Esporte' })}
+    ${templateCategory({
+      src: 'img/stretching-exercises.png',
+      title: 'Esporte'
+    })}
     ${templateCategory({ src: 'img/museum.png', title: 'Arte' })}
     `;
 
   const currentUser = firebase.auth().currentUser;
   if (currentUser) {
     const userUid = currentUser.uid;
-    firebase.firestore().collection('users').where('user_uid', '==', userUid)
+    firebase
+      .firestore()
+      .collection('users')
+      .where('user_uid', '==', userUid)
       .get()
       .then((query) => {
         query.forEach((user) => {
@@ -45,12 +51,17 @@ const showEvents = (array) => {
   } else {
     main.innerHTML = Card(array[index], funcs);
   }
-}
-  
+};
+
 let arrayEvents = [];
 const getEvents = () => {
-  document.querySelectorAll('.arrow').forEach((arrow) => arrow.classList.remove('hide'));
-  firebase.firestore().collection('events').orderBy('date')
+  document
+    .querySelectorAll('.arrow')
+    .forEach((arrow) => arrow.classList.remove('hide'));
+  firebase
+    .firestore()
+    .collection('events')
+    .orderBy('date')
     .get()
     .then((querySnapshot) => {
       arrayEvents = [];
@@ -58,7 +69,7 @@ const getEvents = () => {
         const docEvent = {
           ...doc.data(),
           id: doc.id,
-          position: index,
+          position: index
         };
         arrayEvents.push(docEvent);
         tamanho = arrayEvents.length;
@@ -76,14 +87,19 @@ const save = (bookmark) => {
       bookmark.classList.add('fas');
       bookmark.classList.remove('far');
       document.querySelector('.save').classList.add('animated', 'tada');
-      firebase.firestore().collection('users')
+      firebase
+        .firestore()
+        .collection('users')
         .get()
         .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
             if (user === doc.data().user_uid) {
-              firebase.firestore().collection('users').doc(doc.id)
+              firebase
+                .firestore()
+                .collection('users')
+                .doc(doc.id)
                 .update({
-                  id_save: firebase.firestore.FieldValue.arrayUnion(id),
+                  id_save: firebase.firestore.FieldValue.arrayUnion(id)
                 });
             }
           });
@@ -91,14 +107,19 @@ const save = (bookmark) => {
     } else {
       bookmark.classList.add('far');
       bookmark.classList.remove('fas');
-      firebase.firestore().collection('users')
+      firebase
+        .firestore()
+        .collection('users')
         .get()
         .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
             if (user === doc.data().user_uid) {
-              firebase.firestore().collection('users').doc(doc.id)
+              firebase
+                .firestore()
+                .collection('users')
+                .doc(doc.id)
                 .update({
-                  id_save: firebase.firestore.FieldValue.arrayRemove(id),
+                  id_save: firebase.firestore.FieldValue.arrayRemove(id)
                 });
             }
           });
@@ -110,52 +131,79 @@ const save = (bookmark) => {
 };
 
 let arrayfilter = [];
-  
-const getCategory = (parameter, hash) => { 
-  const category = hash.replace(/\#(.*?)\-/, '')
+
+const getCategory = (parameter, hash) => {
+  const category = hash.replace(/#(.*?)-/, '');
   document.querySelector('main').innerHTML = '';
 
-  firebase.firestore().collection('events')
+  firebase
+    .firestore()
+    .collection('events')
     .where(parameter, 'array-contains', category)
     .orderBy('date')
     .get()
     .then((querySnapshot) => {
       arrayfilter = [];
-      querySnapshot.forEach((doc) => {       
+      querySnapshot.forEach((doc) => {
         const docEvent = {
           ...doc.data(),
           id: doc.id,
-          position: index,
+          position: index
         };
-        console.log(docEvent);
-        
         arrayfilter.push(docEvent);
         tamanho = arrayfilter.length;
       });
       index = 0;
       showEvents(arrayfilter);
-    })
+    });
 };
 
 const swipeRight = () => {
-  (index === tamanho - 1) ? index = 0 : index += 1;  
+  index === tamanho - 1 ? (index = 0) : (index += 1);
   const card = document.querySelector('article');
   card.className = 'card card-size p-1 cards-background swiping-right';
   if (window.location.hash === '') {
-    card.addEventListener('animationend', () => { showEvents(arrayEvents) });
+    card.addEventListener('animationend', () => {
+      showEvents(arrayEvents);
+    });
   } else {
-    card.addEventListener('animationend',() => { showEvents(arrayfilter) });
+    card.addEventListener('animationend', () => {
+      showEvents(arrayfilter);
+    });
   }
 };
 
 const swipeLeft = () => {
-  (index === 0) ? index = tamanho - 1 : index -= 1;
+  index === 0 ? (index = tamanho - 1) : (index -= 1);
   const card = document.querySelector('article');
   card.className = 'card card-size p-1 cards-background swiping-left';
   if (window.location.hash === '') {
-    card.addEventListener('animationend', () => { showEvents(arrayEvents) });
+    card.addEventListener('animationend', () => {
+      showEvents(arrayEvents);
+    });
   } else {
-    card.addEventListener('animationend', () => { showEvents(arrayfilter) });
+    card.addEventListener('animationend', () => {
+      showEvents(arrayfilter);
+    });
+  }
+};
+
+const addingEvents = () => {
+  hammer.on('swiperight', swipeRight);
+  hammer.on('swipeleft', swipeLeft);
+};
+
+addingEvents();
+
+document.querySelector('.fa-angle-left').addEventListener('click', swipeLeft);
+document.querySelector('.fa-angle-right').addEventListener('click', swipeRight);
+
+window.onhashchange = () => {
+  if (!(window.location.hash === '')) {
+    hammer.off('swiperight');
+    hammer.off('swipeleft');
+  } else {
+    addingEvents();
   }
 };
 
@@ -166,12 +214,7 @@ const funcs = {
   select,
   getEvents,
   save,
-  getCategory,
+  getCategory
 };
-
-hammer.on('swiperight', swipeRight);
-hammer.on('swipeleft', swipeLeft);
-document.querySelector('.fa-angle-left').addEventListener('click', swipeLeft);
-document.querySelector('.fa-angle-right').addEventListener('click', swipeRight);
 
 export default funcs;

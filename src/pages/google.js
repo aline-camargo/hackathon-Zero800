@@ -21,7 +21,14 @@ const loginGoogle = () => {
           $('#myModal').modal('hide');
         })
         .catch(() => {
-          alert('Falha na autenticação')
+          Toastify({
+            text: 'Erro na autenticação.',
+            duration: 3000,
+            gravity: 'top',
+            position: 'center',
+            backgroundColor: '#d32f2f',
+            className: 'danger',
+          }).showToast();
         });
     });
 };

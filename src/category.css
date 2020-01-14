@@ -11,6 +11,10 @@
     color: black;
     cursor: pointer;
 }
+.a-category:hover {
+    text-decoration: none;
+    color: #4EC993;
+}
 
 .img-category {
     border: 3px solid #4EC993;

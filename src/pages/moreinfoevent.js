@@ -15,27 +15,14 @@ const moreInfoTemplate = (props) => {
   return template;
 };
 
-const getMoreEvent = (id) => {
-  const main = document.querySelector('main');
-  const noHashId = id.replace(/#/, '');
-  document.querySelector('.container-category').innerHTML = '';
-  document.querySelectorAll('.arrow').forEach((arrow) => arrow.classList.add('hide'));
-
-  firebase.firestore().collection('events').doc(noHashId).get()
-    .then((doc) => {
-      main.innerHTML = moreInfoTemplate(doc.data()); 
-      getMap(doc.data().location);
-    });
-};
-
 const getMap = (searchText) => {
-  let platform = new H.service.Platform({
+  const platform = new H.service.Platform({
     apikey: 'O9FC31KMgVFrvFFFc5QIMm2GWYnXeCpHXjRox3A0ENs',
   });
 
-  let maptypes = platform.createDefaultLayers();
+  const maptypes = platform.createDefaultLayers();
 
-  let map = new H.Map(
+  const map = new H.Map(
     document.querySelector('.map-container'),
     maptypes.vector.normal.map,
     {
@@ -52,20 +39,32 @@ const getMap = (searchText) => {
     let position;
     let marker;
     // Add a marker for each location found
-    for (let i = 0; i < locations.length; i++) {
+    locations.forEach((element) => {
       position = {
-        lat: locations[i].Location.DisplayPosition.Latitude,
-        lng: locations[i].Location.DisplayPosition.Longitude,
+        lat: element.Location.DisplayPosition.Latitude,
+        lng: element.Location.DisplayPosition.Longitude,
       };
-
       map.setCenter(position);
       marker = new H.map.Marker(position);
       map.addObject(marker);
-    }
+    });
   };
 
   const geocoder = platform.getGeocodingService();
   geocoder.geocode(geocodingParams, onResult);
+};
+
+const getMoreEvent = (id) => {
+  const main = document.querySelector('main');
+  const noHashId = id.replace(/#/, '');
+  document.querySelector('.container-category').innerHTML = '';
+  document.querySelectorAll('.arrow').forEach((arrow) => arrow.classList.add('hide'));
+
+  firebase.firestore().collection('events').doc(noHashId).get()
+    .then((doc) => {
+      main.innerHTML = moreInfoTemplate(doc.data());
+      getMap(doc.data().location);
+    });
 };
 
 export default getMoreEvent;
