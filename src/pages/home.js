@@ -23,9 +23,9 @@ const showEvents = (array) => {
     ${templateCategory({ src: 'img/theater.png', title: 'Teatro' })}
     ${templateCategory({ src: 'img/popcorn.png', title: 'Cinema' })}
     ${templateCategory({
-      src: 'img/stretching-exercises.png',
-      title: 'Esporte'
-    })}
+    src: 'img/stretching-exercises.png',
+    title: 'Esporte'
+  })}
     ${templateCategory({ src: 'img/museum.png', title: 'Arte' })}
     `;
 
@@ -199,11 +199,14 @@ document.querySelector('.fa-angle-left').addEventListener('click', swipeLeft);
 document.querySelector('.fa-angle-right').addEventListener('click', swipeRight);
 
 window.onhashchange = () => {
-  if (!(window.location.hash === '')) {
+  if (window.location.hash === ''
+    || window.location.hash.includes('Tipo')
+    || window.location.hash.includes('Regiao')
+  ) {
+    addingEvents();
+  } else {
     hammer.off('swiperight');
     hammer.off('swipeleft');
-  } else {
-    addingEvents();
   }
 };
 
@@ -214,7 +217,7 @@ const funcs = {
   select,
   getEvents,
   save,
-  getCategory
+  getCategory,
 };
 
 export default funcs;

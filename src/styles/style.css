@@ -8,20 +8,24 @@ body {
   border-radius: 6px !important;
 }
 
-.img-profile {
-  border-radius: 50%;
-  border: solid 2px #4FC993;
-  margin-bottom: 18px;
+.success {
+  width: 90%;
+  max-width: none !important;
+  border-radius: 6px !important;
 }
+
+.img-profile {
+  border: solid 2px #4FC993;
+  height: 230px;
+  width: 230px;
+  object-fit: cover;
+}
+
 .name-user {
   color: #3C9865;
-  font-size: 4vw;
   font-weight: bold;
 }
-.name {
-  display: inline-block;
-  vertical-align: top;
-}
+
 .all-content {
   margin-top: 30px;
 }
@@ -64,11 +68,6 @@ html,body{
 
 .nav-item {
     align-self: center;
-}
-
-.icon {
-    font-size: 2vw;
-    margin-bottom: 2px;
 }
 
 .menu-topo {
@@ -266,47 +265,20 @@ html,body{
  .menu-footer {
      display: none;
  }
-
- .icon {
-     font-size: 20px;
-     margin-bottom: 2px;
- }
  
  .nav-item {
      text-align: center;
  }
 
-.content-one {
-  padding-right: 80px;
-  padding-left: 60px;
-}
-.border {
- display: none;
-}
-
 .all-content {
  margin-top: 60px;
  text-align: center;
 }
-.name {
- display: block;
-}
-.border {
- border-bottom: solid 1px #A8A99F;
-}
-.img-profile {
- width: 180px;
-}
+
 .border-desktop {
  border-bottom: solid 1px #A8A99F;
- 
 }
 
-.icon {
- color: #5D5D57;
- font-size: 20px;
- cursor: pointer;
-}
 .options {
  color:#5E5E57;
  font-size: 24px;
