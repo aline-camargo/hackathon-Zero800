@@ -35,7 +35,8 @@ const addPhoto = () => {
   } else {
     firebase
       .storage()
-      .ref(`users/${user}.png`)
+      .ref()
+      .child(`users/${user}.png`)
       .put(foto.files[0])
       .then(() => {
         Toastify({
@@ -69,9 +70,12 @@ const getUser = () => {
 
   firebase
     .storage()
-    .ref('users')
-    .child(`${user.uid}.png`)
+    .ref()
+    .child(`users/${user.uid}.png`)
     .getDownloadURL()
+    .catch((err) => {
+      console.log(err)
+    })
     .then((url) => {
       main.innerHTML = profile(user.displayName, url);
     })
