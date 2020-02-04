@@ -10,7 +10,7 @@ const getFavorites = () => {
   firebase
     .firestore()
     .collection('users')
-    .doc('user_uid', '==', user)
+    .where('user_uid', '==', user)
     .get()
     .then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
