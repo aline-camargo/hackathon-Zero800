@@ -1,6 +1,7 @@
 import Card from '../components/main-card.js';
 import templateCategory from '../components/event-categories.js';
 import Select from '../components/select.js';
+import loadingSpinner from '../components/loading-spinner.js';
 
 const hammer = new Hammer(document.querySelector('main'));
 let index = 0;
@@ -16,6 +17,7 @@ const select = (id) => {
 
 const showEvents = (array) => {
   const main = document.querySelector('main');
+  main.innerHTML = loadingSpinner();
   document.querySelector('.container-category').innerHTML = `
     ${Select(select)}
     ${templateCategory({ src: 'img/tickets.png', title: 'Todos' })}

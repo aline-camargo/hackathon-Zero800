@@ -223,6 +223,14 @@ html,body{
   width: 96vw;
 }
 
+.size-spinner {
+  height: 20vh !important;
+  width: 20vh !important;
+  border-width: 0.5em !important;
+  animation-duration: 1s !important;
+  margin-top: 30vh;
+}
+
 @keyframes swipeRight {
   from {
       transform: rotate(0) translate(0)

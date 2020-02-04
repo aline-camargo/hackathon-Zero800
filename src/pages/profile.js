@@ -1,3 +1,5 @@
+import loadingSpinner from '../components/loading-spinner.js';
+
 const profile = (name, url) => {
   const template = `
       <div class="d-flex flex-column align-items-center mb-4">
@@ -16,6 +18,7 @@ const profile = (name, url) => {
         </button>
       </div>
   `;
+  
   return template;
 };
 
@@ -67,6 +70,8 @@ const getUser = () => {
   const user = firebase.auth().currentUser;
   document.querySelector('.container-category').innerHTML = '';
   document.querySelectorAll('.arrow').forEach((arrow) => arrow.classList.add('hide'));
+  
+  main.innerHTML = loadingSpinner();
 
   firebase
     .storage()
@@ -74,10 +79,21 @@ const getUser = () => {
     .child(`users/${user.uid}.png`)
     .getDownloadURL()
     .catch((err) => {
-      console.log(err)
+      Toastify({
+        text: 'Houve um erro no carregamento da imagem.',
+        duration: 3000,
+        gravity: 'top',
+        position: 'center',
+        backgroundColor: '#d32f2f',
+        className: 'danger',
+      }).showToast();
     })
     .then((url) => {
-      main.innerHTML = profile(user.displayName, url);
+      if (!url) {
+        main.innerHTML = profile(user.displayName, '../img/placeholder.png');
+      } else {
+        main.innerHTML = profile(user.displayName, url);
+      }
     })
     .then(() => {
       document.querySelector('.logout').addEventListener('click', () => {

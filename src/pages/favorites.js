@@ -1,11 +1,13 @@
 import favoritesTemplate from '../components/saved-card.js';
+import loadingSpinner from '../components/loading-spinner.js';
 
 const getFavorites = () => {
   const main = document.querySelector('main');
   const user = firebase.auth().currentUser.uid;
   document.querySelector('.container-category').innerHTML = '';
-  main.innerHTML = '';
+  // main.innerHTML = '';
   document.querySelectorAll('.arrow').forEach((arrow) => arrow.classList.add('hide'));
+  main.innerHTML = loadingSpinner();
 
   firebase
     .firestore()
@@ -14,6 +16,7 @@ const getFavorites = () => {
     .get()
     .then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
+        main.innerHTML = '';
         doc.data().id_save.forEach((ref) => {
           firebase.firestore().collection('events')
             .doc(ref)
