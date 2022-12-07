@@ -30,7 +30,7 @@
     "eslint-plugin-import": "^2.18.2"
   },
   "dependencies": {
-    "lint": "^0.7.0",
+    "lint": "^0.8.8",
     "serve": "^11.2.0",
     "toastify-js": "^1.6.2"
   }
